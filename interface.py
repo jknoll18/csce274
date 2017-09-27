@@ -9,10 +9,10 @@ class Interface:
     self.serial_connection = serial.Serial('/dev/ttyUSB0', 115200)
 
   def write_raw(raw_command):
-    self.serial_connection.write(raw_command)
+    self.serial_connection.write(raw_command);
 
   def read_raw(num_bytes):
-    raw_data = self.serial_connection.read(num_bytes)
+    raw_data = self.serial_connection.read(num_bytes);
     return raw_data
 
 
@@ -39,7 +39,7 @@ class Interface:
   def command(self, num):
     if num == 128:
       raw_command = chr(128)
-      self.write_raw(raw_command)    
+      self.write_raw(raw_command)    ##should we change the nums to 1,2,3 instead of the specific numbers
     elif num == 173:
       self.stop()
     elif num == 7:
@@ -49,4 +49,17 @@ class Interface:
     elif num == 131:
       self.safe()
     elif num == 137:
+	  ##look if there is a condition for drive
       self.drive()
+	  
+	  
+  def stop():  ##the stop function to exit out ot the interface
+    self.write(chr(173))
+  def reset():  ##the reset function to reset the robot and put it into passive
+    self.write(chr(7))
+  def passive():  ##the passive function reconnects the robot to the original passive state
+    self.write(chr(128))
+  def safe():  ##the safe function sets the robot to the state safe
+    self.write(chr(131))
+  def drive():
+    ## write with velocity and radius
