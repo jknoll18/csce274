@@ -5,8 +5,8 @@ import threading
 class Interface:
   def __init__(self):
     self.connect()
-	## passive() for task 3a?
-	## safe()
+    self.passive() ##is this right
+    self.safe()
 
   def connect(self):
     self.serial_connection = serial.Serial('/dev/ttyUSB0', 115200)
@@ -39,26 +39,26 @@ class Interface:
     else:
       print('passive')
 
-  def command(var):
+  def command(self,var): ##function that calls functions depeding on input
     if var == "rp":
       raw_command = chr(128)
       self.write_raw(raw_command)    ##should we change the nums to 1,2,3 instead of the specific numbers
     elif var == "d":
-      stop()
+      self.stop()
     elif var == "r":
-      reset()
+      self.reset()
     elif var == "rp":
-      passive()
+      self.passive()
     elif var == "cl": ## maybe put something in for all button presses
-      clean()
+      self.clean()
     elif var == "s":
-      safe()
+      self.safe()
     elif var == "dr":
       print('enter velocity')
       velocity = input()
       print('enter radius')
       radius = input()
-      drive(self,velocity,radius)
+      self.drive(velocity,radius)
     else:
       exit(0)
   def toHex(value, bit_length):
@@ -66,25 +66,25 @@ class Interface:
   def bytes(number):
     return divmod(number,0x100)  
   def stop(self):  ##the stop function to exit out ot the interface
-    self.write(chr(173))
+    self.serial_connection.write(chr(173))
   def reset(self):  ##the reset function to reset the robot and put it into passive
-    self.write(chr(7))
+    self.serial_connection.write(chr(7))
   def passive(self):  ##the passive function reconnects the robot to the original passive state
-    self.write(chr(128))
+    self.serial_connection.write(chr(128))
   def clean(self):
-    self.write(chr(165))[0]  ## is this how it works on page 17?
+    self.serial_connection.write(chr(165))[0]  ## is this how it works on page 17?
   def safe(self):  ##the safe function sets the robot to the state safe
-    self.write(chr(131))
-  def drive(self,velocity,radius):
-    hex_v = toHex(velocity,16)
+    self.serial_connection.write(chr(131))
+  def drive(self,velocity,radius): ## drive function
+    hex_v = toHex(velocity,16)  ## converts the velocity and radius to hexadecimal
     hev_r = toHex(radius,16)
-    high_v, low_v = bytes(hex_v)
+    high_v, low_v = bytes(hex_v) ##splits the hexadecimal to high and low
     high_r, low_r = bytes(hev_r)
-    high_vd = int(high_v,16)
+    high_vd = int(high_v,16)  # converts the each high and low to decimal
     low_vd = int(low_v,16)
     high_rd = int(high_r,16)
     low_rd = int(low_r,16)
-    self.write(chr(137))[high_vd][low_vd][high_rd][low_rd]
+    self.serial_connection.write(chr(137))[high_vd][low_vd][high_rd][low_rd] # execute drive
   def time(seconds,velocity,radius):
     timerO = Timer(seconds, drive(velocity,radius))
     timer0.start()
