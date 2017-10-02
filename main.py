@@ -8,9 +8,15 @@ def main(args=None):
     inter = Interface()
     cond = raw_input("*enter a for commands, enter b for reading, enter c for exit*")
     if cond == "a":
-      print("*enter the number you want for the command*")
-      var = raw_input("*rp for reset and passive, d to disconnect, r to reset, s for safe, dr for drive*")
-      inter.command(var)
+      is_go = False
+      while is_go == False:
+        print("*enter the number you want for the command*")
+        var = raw_input("*rp for reset and passive, d to disconnect, r to reset, s for safe, dr for drive*, e for exit")
+        if var == "e":
+          is_go = True
+          exit(0)
+        else:
+          inter.command(var)
     if cond == "b":
       choices = raw_input("*enter 1 for reading raw input and enter 2 to read sensor*")
       if choices == "1":

@@ -33,10 +33,10 @@ class Interface:
     var = self.serial_connection.read(1)
         
     # Processing
-    val = struct.unpack('B',var)[0] ## change this please
+    val = struct.unpack('B',var)[0] 
     if val == 10:
       print('safe')
-    else:
+    else:              ## clean not clean
       print('passive')
 
   def command(self,var): ##function that calls functions depeding on input
@@ -54,17 +54,17 @@ class Interface:
     elif var == "s":
       self.safe()
     elif var == "dr":
-      print('enter velocity')
+      print("enter velocity")
       velocity = input()
-      print('enter radius')
+      print("enter radius")
       radius = input()
       self.drive(velocity,radius)
     else:
       exit(0)
-  def toHex(value, bit_length):
+  def toHex(self,value, bit_length):
     return hex((value + (1 << bit_length)) % (1 << bit_length))
-  def bytes(number):
-    return divmod(number,0x100)  
+  ##def bytes(self,number):
+    ##return tuple(number[2:4],number[4:6])
   def stop(self):  ##the stop function to exit out ot the interface
     self.serial_connection.write(chr(173))
   def reset(self):  ##the reset function to reset the robot and put it into passive
@@ -76,10 +76,14 @@ class Interface:
   def safe(self):  ##the safe function sets the robot to the state safe
     self.serial_connection.write(chr(131))
   def drive(self,velocity,radius): ## drive function
-    hex_v = toHex(velocity,16)  ## converts the velocity and radius to hexadecimal
-    hev_r = toHex(radius,16)
-    high_v, low_v = bytes(hex_v) ##splits the hexadecimal to high and low
-    high_r, low_r = bytes(hev_r)
+    hex_v = self.toHex(velocity,16)  ## converts the velocity and radius to hexadecimal
+    hev_r = self.toHex(radius,16)
+    ##high_v, low_v = self.bytes(hex_v) ##splits the hexadecimal to high and low
+    ##high_r, low_r = self.bytes(hev_r)
+	high_v = hex_v[2:4]
+	low_v = hex_v[4:6]
+	high_rd = hex_r[2:4]
+	low_rd = hex_r[4:6]
     high_vd = int(high_v,16)  # converts the each high and low to decimal
     low_vd = int(low_v,16)
     high_rd = int(high_r,16)
