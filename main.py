@@ -1,32 +1,26 @@
-import interface
+from interface import Interface
 
 def main(args=None):
   ##creates a main for the interface
-	commands = interface()  ## Does this work?
   print("*Welcome to the robot interface*")
-  print("*Press c to connect to the robot*")
-  str = input()
-    if str = c or C:
-      commands.connect()
-	  print("*enter 1 for commands, enter 2 for reading, enter 3 for exit*")
-	  cond = input()
-	  if cond = 1:
-	    print("*enter the number you want for the command*")
-		print("*128 for reset and passive, 173 to disconnect, 7 to reset, 131 for safe, 137 for drive*")
-	    var = input()
-	    command(self,var)
-      else:
-	    exit(0)
-	  if cond = 2:
-        print("*enter 1 for reading raw input and enter 2 to read sensor*")
-        choices = input()
-		  if choices = 1:
-		    print("*enter the number of bytes to read*")
-			raw_bytes = input()
-			read_raw(raw_bytes)
-		  if choices = 2:
-		    print("*enter the sensor packet id*")
-			sensor_id = input()
-			read_sensor(self,sensor_id)
-      if cond = 3:
-	    exit(0)
+  str = raw_input("*Press c to connect to the robot*")
+  if str == "c":
+    inter = Interface()
+    cond = raw_input("*enter a for commands, enter b for reading, enter c for exit*")
+    if cond == "a":
+      print("*enter the number you want for the command*")
+      var = raw_input("*rp for reset and passive, d to disconnect, r to reset, s for safe, dr for drive*")
+      inter.command(var)
+    if cond == "b":
+      choices = raw_input("*enter 1 for reading raw input and enter 2 to read sensor*")
+      if choices == "1":
+        raw_bytes = raw_input("*enter the number of bytes to read*")
+        inter.read_raw(raw_bytes)
+      if choices == "2":
+        sensor_id = raw_input("*enter the sensor packet id*")
+        inter.read_sensor(sensor_id)
+    if cond == "c":
+      exit(0)
+  else:
+    exit(0)
+main()
