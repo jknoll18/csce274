@@ -1,4 +1,5 @@
 interface.py
+
 this file contains the interface that combines the tasks of part 1 and 2. 
 writing and sending commands to the machine
 process then close information
@@ -11,12 +12,15 @@ safe : def safe(self):  ##the safe function sets the robot to the state safe
 drive command : def drive(self,velocity,radius): ## drive function
 
 main.py
+
 instructions for connecting to robot
 sets and specifies passive vs safe mode :
 var = raw_input("*rp for reset and passive, d to disconnect, r to reset, s for safe, dr for drive*, e for exit")
 var = raw_input("*rp for reset and passive, d to disconnect, r to reset, s for safe, dr for drive*, ! for stop, e for exit")
-
+distinguishes choices : choices = raw_input("*enter 1 for reading raw input and enter 2 to read sensor*")
 
 
 reading.py
-descrip
+
+reads and interprets sensor readings
+unfinished
