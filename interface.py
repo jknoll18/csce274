@@ -86,10 +86,10 @@ class Interface:
      v = int(velocity) & 0xffff
      r = int(radius) & 0xffff
       
-      if v >= 501 || r >= 2001:
+      if v >= 501 || r >= 2001:   ##sketchy memory of an if or from java (recheck)
       self.close()
       
-      else:
+      else: ##statement or leave
      pack =struct.unpack('4B',struct.pack('>2H',v,r))
      opcode = (137,)
      data = opcode + pack
