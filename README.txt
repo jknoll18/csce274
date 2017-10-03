@@ -11,7 +11,10 @@ safe : def safe(self):  ##the safe function sets the robot to the state safe
 drive command : def drive(self,velocity,radius): ## drive function
 
 main.py
-descrip
+instructions for connecting to robot
+sets and specifies passive vs safe mode :
+var = raw_input("*rp for reset and passive, d to disconnect, r to reset, s for safe, dr for drive*, e for exit")
+var = raw_input("*rp for reset and passive, d to disconnect, r to reset, s for safe, dr for drive*, ! for stop, e for exit")
 
 
 
