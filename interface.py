@@ -25,26 +25,30 @@ class Interface:
       sensor_packet_id (int): ID of the sensor packet.
     """
     # write
-    raw_command = chr(142) + chr(sensor_packet_id)
-    self.serial_connection.write_raw(raw_command)
+    sense = int(sensor_packet_id)
+    raw_command = chr(142) + chr(sense)
+    self.serial_connection.write(raw_command)
         
     # read raw
         
     var = self.serial_connection.read(1)
         
     # Processing
-    val = struct.unpack('B',var)[0] 
-    if val == 10:
-      print('safe')
+    val = struct.unpack('B',var)[0] ## find out why only prints out as 0 
+    print val
+    if val == 1:
+      print('active')
+      return True
     else:              ## clean not clean
-      print('passive')
+      print('not active')
+      return False
 
   def command(self,var): ##function that calls functions depeding on input
     if var == "rp":
       raw_command = chr(128)
       self.write_raw(raw_command)    ##should we change the nums to 1,2,3 instead of the specific numbers
     elif var == "d":
-      self.stop()
+      self.close()
     elif var == "r":
       self.reset()
     elif var == "rp":
@@ -53,20 +57,22 @@ class Interface:
       self.clean()
     elif var == "s":
       self.safe()
+    elif var == "!":
+      self.stop()
     elif var == "dr":
+      self.safe()
       print("enter velocity")
-      velocity = input()
+      velocity = raw_input()
       print("enter radius")
-      radius = input()
+      radius = raw_input()
       self.drive(velocity,radius)
     else:
-      exit(0)
-  def toHex(self,value, bit_length):
-    return hex((value + (1 << bit_length)) % (1 << bit_length))
-  ##def bytes(self,number):
-    ##return tuple(number[2:4],number[4:6])
-  def stop(self):  ##the stop function to exit out ot the interface
+      is_connected = False
+      self.close()
+  def stop(self):  ##the stop function to the robot
     self.serial_connection.write(chr(173))
+  def close(self):
+    self.serial_connection.close()
   def reset(self):  ##the reset function to reset the robot and put it into passive
     self.serial_connection.write(chr(7))
   def passive(self):  ##the passive function reconnects the robot to the original passive state
@@ -76,19 +82,19 @@ class Interface:
   def safe(self):  ##the safe function sets the robot to the state safe
     self.serial_connection.write(chr(131))
   def drive(self,velocity,radius): ## drive function
-    hex_v = self.toHex(velocity,16)  ## converts the velocity and radius to hexadecimal
-    hev_r = self.toHex(radius,16)
-    ##high_v, low_v = self.bytes(hex_v) ##splits the hexadecimal to high and low
-    ##high_r, low_r = self.bytes(hev_r)
-	high_v = hex_v[2:4]
-	low_v = hex_v[4:6]
-	high_rd = hex_r[2:4]
-	low_rd = hex_r[4:6]
-    high_vd = int(high_v,16)  # converts the each high and low to decimal
-    low_vd = int(low_v,16)
-    high_rd = int(high_r,16)
-    low_rd = int(low_r,16)
-    self.serial_connection.write(chr(137))[high_vd][low_vd][high_rd][low_rd] # execute drive
+     ## put in error checking
+     v = int(velocity) & 0xffff
+     r = int(radius) & 0xffff
+     pack =struct.unpack('4B',struct.pack('>2H',v,r))
+     opcode = (137,)
+     data = opcode + pack
+     byte = struct.pack('B' * len(data), *data)
+     self.serial_connection.write(byte) # execute drive
+  def stream(self,num_packets,packet_id):## streams i tried to setup
+    code_stream = chr(148) + chr(num_packets) + chr(packet_id)
+    self.serial_connection.write(code_stream)
+  def stopStream(self,state):  ##function to stop the stream
+    code_stream2 = chr(150) + chr(state)
   def time(seconds,velocity,radius):
     timerO = Timer(seconds, drive(velocity,radius))
     timer0.start()
