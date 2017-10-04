@@ -66,6 +66,8 @@ class Interface:
       print("enter radius")
       radius = raw_input()
       self.drive(velocity,radius)
+    elif var == "pe":
+      self.penta()
     else:
       is_connected = False
       self.close()
@@ -98,9 +100,18 @@ class Interface:
     self.serial_connection.write(code_stream)
   def stopStream(self,state):  ##function to stop the stream
     code_stream2 = chr(150) + chr(state)
-  def time(seconds,velocity,radius):
+  def time(self,seconds,velocity,radius):
     timerO = Timer(seconds, drive(velocity,radius))
     timer0.start()
+<<<<<<< HEAD
+  def penta(self):  ## read buttons then excute this
+    self.drive(30,768)  ##timer needed? Assuming 768 is straight
+    self.time(9.0,30,576)
+    self.time(9.0,30,384) ## does timer do it all at once
+    self.time(9.0,30,576)
+    self.time(9.0,30,384)
+    self.stop()  ## stops the roomba
+=======
   def penta():  ## read buttons then excute this
     drive(30,768)  ##timer needed? Assuming 768 is straight
     time(9.0,30,576)
@@ -108,3 +119,4 @@ class Interface:
     time(27.0,30,576)
     time(36.0,30,384)
     stop()  ## stops the roomba
+>>>>>>> 342f3b55fd08bc175715af7900b6837b3e4e82ee
