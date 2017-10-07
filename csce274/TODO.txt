@@ -1,0 +1,10 @@
+##figure out how to properly read the data?
+##find out why reading the buttons gives you 0 when clean is pressed and not
+##I put a stream function in interface to maybe help with catching the data from the sensor
+
+##If figured out above test out the penta method does it work?
+##If not try to play around with the values untill they are close enough
+##Does the timer work? If not try to put all of the times to 9 s or try to read the section on timer in threading
+
+
+## finish report (update)
