@@ -7,18 +7,17 @@ class Interface:
     self.connect()
     self.passive() ##is this right
     self.safe()
-
+  ##allows connection to the robot with a baudrate of 115200
   def connect(self):
     self.serial_connection = serial.Serial('/dev/ttyUSB0', 115200)
-
+  ##function that allows the user to use the built_in write function to do an action
   def write_raw(self,raw_command):  
     self.serial_connection.write(raw_command)
-
+  ##this will read the number of bytes use for each function and return a hex value
   def read_raw(self,num_bytes):
     raw_data = self.serial_connection.read(num_bytes)
     return raw_data
-
-
+  ##function that will read the sensor depending on what sensor pack it is use
   def read_sensor(self, sensor_packet_id):
     """
     Args:
@@ -42,16 +41,17 @@ class Interface:
     else:              ## clean not clean
       print('not active')
       return val
-
+  ## the purpose for this function is to choose which of the multiple functions will be used 
+  ##depending on what keyword it is shown in the prompt when the main file is compiled
   def command(self,var): ##function that calls functions depeding on input
     if var == "rp":
       raw_command = chr(128)
       self.write_raw(raw_command)    ##should we change the nums to 1,2,3 instead of the specific numbers
-    elif var == "d":
+    elif var == "d":##this statement will clsoe the program
       self.close()
-    elif var == "r":
+    elif var == "r":##this statement will reset the robot
       self.reset()
-    elif var == "rp":
+    elif var == "rp":## this statement will set the robot to passive by calling the passive function
       self.passive()
     elif var == "cl": ## maybe put something in for all button presses
       self.clean()
@@ -59,7 +59,7 @@ class Interface:
       self.safe()
     elif var == "!":
       self.stop()
-    elif var == "dr":
+    elif var == "dr":## this statement will allow the user to imput the velocity and radius at which the robot will move
       self.safe()
       print("enter velocity")
       velocity = raw_input()
@@ -83,14 +83,19 @@ class Interface:
     self.serial_connection.write(chr(165))[0]  ## is this how it works on page 17?
   def safe(self):  ##the safe function sets the robot to the state safe
     self.serial_connection.write(chr(131))
+  ##this is the drive function that will allow the user to input a velocity value and radius of how 
+  ##the robot should be moving
   def drive(self,velocity,radius): ## drive function
      v = int(velocity) & 0xffff
      r = int(radius) & 0xffff
+     ##this are initial conditions for the velocity and radius
+     ##radius was commented it out because it was giving out errors
      if v <= -501 or v >= 501: 
        exit(0)
      ##elif r <= -2001 or r >= 2001:
        ##exit(0)
      else:
+      
        pack =struct.unpack('4B',struct.pack('>2H',v,r))
        opcode = (137,)
        data = opcode + pack
@@ -104,6 +109,9 @@ class Interface:
   ##def time(self,seconds,velocity,radius):
     ##timerO = threading.Timer(seconds, self.drive(velocity,radius))
     ##timer0.start()
+  ##this is the pentagon drive function, which allows the robot to move in a pentagon formation
+  ##the drive function and the Timer function from the threading class was used to 
+  ##allow us to set a timer at which each segment of the pentagon the robot should move
   def penta(self):  ## read buttons then excute this
     timer0 = Timer(0.0,self.drive,args=(100,32768))
     timer0.start()                              ## 3 interval str
