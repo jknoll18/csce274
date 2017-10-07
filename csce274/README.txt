@@ -10,7 +10,7 @@ passive : def passive(self):  ##the passive function reconnects the robot to the
 safe : def safe(self):  ##the safe function sets the robot to the state safe
 
 drive command : def drive(self,velocity,radius): ## drive function
-
+Pentagon Drive command : def penta(self) : this allows the robot to move in a pentagon formation
 main.py
 
 instructions for connecting to robot
