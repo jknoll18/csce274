@@ -48,12 +48,13 @@ class Interface:
 	  bumpL = struct.unpack('B',var)[1]
 	  WDR = struct.unpack('B',var)[2]
 	  WDL = struct.unpack('B',var)[3]
+    //look up how to convert a string hex into a signed int.
     elif (sense == 19):
       pack =struct.unpack('4B',struct.pack('>2H', var))
-	elif (sense == 20):
-	  pack =struct.unpack('4B',struct.pack('>2H', var))
-	else:
-	  exit(0)
+    elif (sense == 20):
+      pack =struct.unpack('4B',struct.pack('>2H', var))
+    else:
+      exit(0)
 
   def command(self,var): ##function that calls functions depeding on input
     if var == "rp":
