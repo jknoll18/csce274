@@ -35,7 +35,7 @@ class Interface:
     var = self.serial_connection.read(1)
         
     # Processing
-	if (sense == 18 or sense == 8 or sense == 9 or sense == 10 or sense == 11 or sense == 12 or sense == 13):
+    if (sense == 18 or sense == 8 or sense == 9 or sense == 10 or sense == 11 or sense == 12 or sense == 13):
       val = struct.unpack('B',var)[0]
       if val == 1:
         print('active')
@@ -44,11 +44,11 @@ class Interface:
         print('not active')
         return 0
     elif (sense == 7):
-	  bumpR = struct.unpack('B',var)[0]
-	  bumpL = struct.unpack('B',var)[1]
-	  WDR = struct.unpack('B',var)[2]
-	  WDL = struct.unpack('B',var)[3]
-    //look up how to convert a string hex into a signed int.
+      bumpR = struct.unpack('B',var)[0]
+      bumpL = struct.unpack('B',var)[1]
+      WDR = struct.unpack('B',var)[2]
+      WDL = struct.unpack('B',var)[3]
+    ##look up how to convert a string hex into a signed int.
     elif (sense == 19):
       pack =struct.unpack('4B',struct.pack('>2H', var))
     elif (sense == 20):
@@ -83,7 +83,7 @@ class Interface:
       self.penta()
     elif var == "j":
 	  self.test()
-    elif var == "f":
+    elif var == "f":##this will set the robot to full mode
       self.full()
     else:
       is_connected = False
