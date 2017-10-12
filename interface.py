@@ -49,6 +49,10 @@ class Interface:
       WDR = struct.unpack('B',var)[2]
       WDL = struct.unpack('B',var)[3]
     ##look up how to convert a string hex into a signed int.
+    ##it both distance and angle we need to find the raw encoder count 
+    ##using this formula, it's sensor packet 43, 44
+    ## N counts * (mm in 1 wheel revolution / counts in 1 wheel revolution) = mm
+    ##N counts * (π * 72.0 / 508.8) = mm
     elif (sense == 19):
       pack =struct.unpack('4B',struct.pack('>2H', var))
     elif (sense == 20):
