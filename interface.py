@@ -33,7 +33,8 @@ class Interface:
     # read raw
         
     var = self.serial_connection.read(1)
-        
+    ##since Distance and angle are 2 bits we should create another variable
+    var2 = self.serial_connection.read(2)    
     # Processing
     if (sense == 18 or sense == 8 or sense == 9 or sense == 10 or sense == 11 or sense == 12 or sense == 13):
       val = struct.unpack('B',var)[0]
