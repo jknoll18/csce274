@@ -53,7 +53,7 @@ class Interface:
     ##it both distance and angle we need to find the raw encoder count 
     ##using this formula, it's sensor packet 43, 44
     ## N counts * (mm in 1 wheel revolution / counts in 1 wheel revolution) = mm
-    ##N counts * (π * 72.0 / 508.8) = mm
+    ##N counts * (pi * 72.0 / 508.8) = mm
     elif (sense == 19):
       pack =struct.unpack('4B',struct.pack('>2H', var))
     elif (sense == 20):
@@ -90,6 +90,12 @@ class Interface:
 	  self.test()
     elif var == "f":##this will set the robot to full mode
       self.full()
+    elif var == "drd":
+      print("enter right wheel velocity")
+      vR = raw_input()
+      print("enter left wheel velocity")
+      vL = raw_input()
+      self.driveDirect(vR,vL)
     else:
       is_connected = False
       self.close()
@@ -114,6 +120,33 @@ class Interface:
      data = opcode + pack
      byte = struct.pack('B' * len(data), *data)
      self.serial_connection.write(byte) # execute drive
+  def driveDirect(self,velocityR,velocityL): ## put in error checking
+    v1 = int(velocityR) & 0xffff
+    v2 = int(velocityL) & 0xffff
+    pack =struct.unpack('4B',struct.pack('>2H',v1,v2))
+    opcode = (145,)
+    data = opcode + pack
+    byte = struct.pack('B' * len(data), *data)
+    self.serial_connection.write(byte)
+  def song(self):
+    ##x = 1
+    ##opcode = (140,)
+    ##num = (int(songnum),)
+    ##top = opcode + num
+    ##while(x < songlen):
+     ## print("note")
+     ## n = raw_input()
+     ## print("duration")
+     ## d = raw_input()
+     ## nl = int(n) & 0xffff
+     ## dl = int(d) & 0xffff
+     ## package = struct.unpack( '4B',struct.pack('>2H',nl,dl)
+     ## top = package + top
+     ## x += 1
+    ##bytes = struct.pack('B' *len(top), *top)
+    self.serial_connection.write(chr(140)+chr(0)+chr(9)+chr(55)+chr(64)+chr(48)+chr(64)+chr(51)+chr(16)+chr(53)+chr(16)+chr(55)+chr(64)+chr(48)+chr(64)+chr(51)+chr(16)+chr(53)+chr(16)+chr(50)+chr(64))
+  def play(self,songnum):
+    self.serial_connection.write(chr(141) + chr(songnum))
   def full(self):
     self.serial_connection.write(chr(132))
   def stream(self,num_packets,packet_id):## streams i tried to setup
