@@ -49,6 +49,8 @@ class Interface:
       bumpL = struct.unpack('B',var)[1]
       WDR = struct.unpack('B',var)[2]
       WDL = struct.unpack('B',var)[3]
+      allval = bumpR + bumpL + WDR + WDL
+      return allval
     ##look up how to convert a string hex into a signed int.
     ##it both distance and angle we need to find the raw encoder count 
     ##using this formula, it's sensor packet 43, 44
@@ -63,7 +65,7 @@ class Interface:
       LEC_read = self.serial.connection.read(LEC)
       LEC_byte = struct.unpack('h', LEC_read)[:2]
     elif (sense == 20):
-      ##pack =struct.unpack('2b',struct.pack('>2h', var2))
+      ##pack =struct.unpack('h',struct.pack('>h', var2))
     else:
       exit(0)
 
@@ -96,6 +98,12 @@ class Interface:
 	  self.test()
     elif var == "f":##this will set the robot to full mode
       self.full()
+    elif var == "drd":
+      print("enter right wheel velocity")
+      vR = raw_input()
+      print("enter left wheel velocity")
+      vL = raw_input()
+      self.driveDirect(vR,vL)
     else:
       is_connected = False
       self.close()

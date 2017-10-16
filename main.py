@@ -12,12 +12,16 @@ def Main(args=None):
       is_go = False
       while is_go == False:
         print("*enter the number you want for the command*")
-        var = raw_input("*rp for reset and passive, ra for reading button, d to disconnect, r to reset\n s for safe, dr for drive*,pe for Pentagon drive, ! for stop, e for exit\n , f for full mode:")
+        var = raw_input("*rp for reset and passive, ra for reading button, d to disconnect, r to reset\n s for safe, dr for drive*,pe for Pentagon drive, ! for stop, e for exit\n , f for full mode, drd for drive direct,p for play,s for song:")
         if var == "e":
           is_go = True
           inter.close()
         if var == "ra":
           read.isActive()
+        if var == "p":
+          inter.play(0)
+        if var == "s":
+          inter.song()
         else:
           inter.command(var)
     if cond == "b":
