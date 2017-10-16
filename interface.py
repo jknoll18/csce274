@@ -31,7 +31,7 @@ class Interface:
     self.serial_connection.write(raw_command)
         
     # read raw
-        
+    
     var = self.serial_connection.read(1)
     ##since Distance and angle are 2 bits we should create another variable
     var2 = self.serial_connection.read(2)    
@@ -54,10 +54,16 @@ class Interface:
     ##using this formula, it's sensor packet 43, 44
     ## N counts * (mm in 1 wheel revolution / counts in 1 wheel revolution) = mm
     ##N counts * (π * 72.0 / 508.8) = mm
-    elif (sense == 19):
-      pack =struct.unpack('4B',struct.pack('>2H', var))
+    ##N counts is the int value about after it is unpacked
+    elif (sense == 19): 
+      ##pack =struct.unpack('2b',struct.pack('h', var2))
+      ## this is the left encoder count, needed to find
+      ## exact distance that roomba travelled 
+      LEC = self.serial_connection.write(chr(142)+chr(43))
+      LEC_read = self.serial.connection.read(LEC)
+      LEC_byte = struct.unpack('h', LEC_read)[:2]
     elif (sense == 20):
-      pack =struct.unpack('4B',struct.pack('>2H', var))
+      ##pack =struct.unpack('2b',struct.pack('>2h', var2))
     else:
       exit(0)
 
