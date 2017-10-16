@@ -49,6 +49,8 @@ class Interface:
       bumpL = struct.unpack('B',var)[1]
       WDR = struct.unpack('B',var)[2]
       WDL = struct.unpack('B',var)[3]
+	  allval = bumpR + bumpL + WDR + WDL
+	  return allval
     ##look up how to convert a string hex into a signed int.
     ##it both distance and angle we need to find the raw encoder count 
     ##using this formula, it's sensor packet 43, 44
