@@ -18,6 +18,8 @@ def Main(args=None):
           inter.close()
         if var == "ra":
           read.isActive()
+        if var == "ra2":
+          read.isActive2()
         if var == "p":
           inter.play(0)
         if var == "s":

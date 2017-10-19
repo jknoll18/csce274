@@ -31,10 +31,10 @@ class Interface:
     self.serial_connection.write(raw_command)
         
     # read raw
-    
+        
     var = self.serial_connection.read(1)
     ##since Distance and angle are 2 bits we should create another variable
-    var2 = self.serial_connection.read(2)    
+    ##var2 = self.serial_connection.read(2)    
     # Processing
     if (sense == 18 or sense == 8 or sense == 9 or sense == 10 or sense == 11 or sense == 12 or sense == 13):
       val = struct.unpack('B',var)[0]
@@ -45,27 +45,26 @@ class Interface:
         print('not active')
         return 0
     elif (sense == 7):
-      bumpR = struct.unpack('B',var)[0]
-      bumpL = struct.unpack('B',var)[1]
-      WDR = struct.unpack('B',var)[2]
-      WDL = struct.unpack('B',var)[3]
-      allval = bumpR + bumpL + WDR + WDL
-      return allval
+      bumpdrop = struct.unpack('B',var)[0]
+      bins = "{0:4b}".format(bumpdrop)
+      if(bins[0] =='1'):
+        print 'LWD Active'
+      if (bins[1] == '1'):
+        print 'RWD Active'
+      if (bins[2] == '1'):
+        print 'LB Active'
+      if (bins[3] == '1'):
+        print 'RB Active'	    
+      return bins
     ##look up how to convert a string hex into a signed int.
     ##it both distance and angle we need to find the raw encoder count 
     ##using this formula, it's sensor packet 43, 44
     ## N counts * (mm in 1 wheel revolution / counts in 1 wheel revolution) = mm
-    ##N counts * (π * 72.0 / 508.8) = mm
-    ##N counts is the int value about after it is unpacked
-    elif (sense == 19): 
-      ##pack =struct.unpack('2b',struct.pack('h', var2))
-      ## this is the left encoder count, needed to find
-      ## exact distance that roomba travelled 
-      LEC = self.serial_connection.write(chr(142)+chr(43))
-      LEC_read = self.serial.connection.read(LEC)
-      LEC_byte = struct.unpack('h', LEC_read)[:2]
+    ##N counts * (pi * 72.0 / 508.8) = mm
+    elif (sense == 19):
+      pack =struct.unpack('4B',struct.pack('>2H', var))
     elif (sense == 20):
-      ##pack =struct.unpack('h',struct.pack('>h', var2))
+      pack =struct.unpack('4B',struct.pack('>2H', var))
     else:
       exit(0)
 
@@ -128,6 +127,33 @@ class Interface:
      data = opcode + pack
      byte = struct.pack('B' * len(data), *data)
      self.serial_connection.write(byte) # execute drive
+  def driveDirect(self,velocityR,velocityL): ## put in error checking
+    v1 = int(velocityR) & 0xffff
+    v2 = int(velocityL) & 0xffff
+    pack =struct.unpack('4B',struct.pack('>2H',v1,v2))
+    opcode = (145,)
+    data = opcode + pack
+    byte = struct.pack('B' * len(data), *data)
+    self.serial_connection.write(byte)
+  def song(self):
+    ##x = 1
+    ##opcode = (140,)
+    ##num = (int(songnum),)
+    ##top = opcode + num
+    ##while(x < songlen):
+     ## print("note")
+     ## n = raw_input()
+     ## print("duration")
+     ## d = raw_input()
+     ## nl = int(n) & 0xffff
+     ## dl = int(d) & 0xffff
+     ## package = struct.unpack( '4B',struct.pack('>2H',nl,dl)
+     ## top = package + top
+     ## x += 1
+    ##bytes = struct.pack('B' *len(top), *top)
+    self.serial_connection.write(chr(140)+chr(0)+chr(9)+chr(55)+chr(64)+chr(48)+chr(64)+chr(51)+chr(16)+chr(53)+chr(16)+chr(55)+chr(64)+chr(48)+chr(64)+chr(51)+chr(16)+chr(53)+chr(16)+chr(50)+chr(64))
+  def play(self,songnum):
+    self.serial_connection.write(chr(141) + chr(songnum))
   def full(self):
     self.serial_connection.write(chr(132))
   def stream(self,num_packets,packet_id):## streams i tried to setup
@@ -141,10 +167,11 @@ class Interface:
    ## timer0.start()
 
   def penta(self):  ## read buttons then excute this
-    timer0 = Timer(0.0,self.drive,args=(100,32768))
+    timer0 = Timer(0.0,self.drive,args=(100,1))
     timer0.start()
-    timer1 = Timer(3.0,self.drive,args=(300,1))
+    timer1 = Timer(3.0,self.drive,args=(100,32768))
     timer1.start()
+    """
     timer2 = Timer(3.4,self.drive,args=(100,32768))
     timer2.start()
     timer3 = Timer(5.9,self.drive,args=(300,1))
@@ -163,4 +190,4 @@ class Interface:
     timer9.start()
     timerA = Timer(16.2,self.stop)
     timerA.start()
-    
+    """
