@@ -17,12 +17,12 @@ class Reading:
           count += 1
         else:
           Interface().stop
-            if sw == 0:
-              if state % 2 == 0:
-                Interface().penta()
-                count += 1
-              else:
-                Interface().stop
+      if sw == 0:
+        if state % 2 == 0:
+          Interface().penta()
+          count += 1
+        else:
+          Interface().stop
   def isActive2(self):
     a = 1
     ##Interface().full()
