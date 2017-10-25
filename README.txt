@@ -23,6 +23,6 @@ Main Commands:
   d:   close                  closes out the connection to the create2
 Contributors:
   Jeffrey Knoll
-  Franco Goldoy
-  Kaitlyn
-  Noah
+  Franco Godoy
+  Kaitlyn Ash
+  Noah Wartzack
