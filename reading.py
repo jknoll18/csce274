@@ -36,10 +36,12 @@ class Reading:
       while(state == 1):
         sw = self.readall()
         sw7 = Interface().read_sensor(18)
+        
         if( sw7 == 1):
           Interface().stop()
           state = 0
         else:
+          LightBump = Interface().read_sensor(45)
           seven = Interface().read_sensor(7)
           eight = self.readall()
           if(seven[0] == "1" or  seven[1] == "1"):
@@ -74,6 +76,9 @@ class Reading:
             timer0.start()
             time.sleep(offset2)
             timer0.cancel()
+         
+
+
           else:
             ##move forward
             Interface().drive(100,32768)
