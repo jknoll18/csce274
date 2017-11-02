@@ -67,18 +67,33 @@ class Interface:
         ## TODO Check Packet ID 51 to see the signal 
         ##strength (unsigned 16-bit value)
       if (bits[1] == '1'):
+        self.serial_connection(chr(142)+chr(50))
+        rb = self.serial_connection.read(2)
+        struct.unpack('>2B',rb )[0]
         print 'Right Front Bumper Active'
         ## TODO Check Packet ID 50 to see the signal strength
       if (bits[2] == '1'):
+        self.serial_connection(chr(142)+chr(49))
+        rb = self.serial_connection.read(2)
+        struct.unpack('>2B',rb )[0]
         print 'Right Center Bumper Active'
         ## TODO Check Packet ID 49 to see the signal strength
       if (bits[3] == '1'):
+        self.serial_connection(chr(142)+chr(48))
+        rb = self.serial_connection.read(2)
+        struct.unpack('>2B',rb )[0]
         print 'Left Center Bumper Active'
         ## TODO Check Packet ID 48 to see the signal strength
       if (bits[4] == '1'):
+        self.serial_connection(chr(142)+chr(47))
+        rb = self.serial_connection.read(2)
+        struct.unpack('>2B',rb )[0]
         print 'Left Front Bumper Active'
         ## TODO Check Packet ID 47 to see the signal strength
       if (bits[5] == '1'):
+        self.serial_connection(chr(142)+chr(46))
+        rb = self.serial_connection.read(2)
+        struct.unpack('>2B',rb )[0]
         print 'Left Bumper Active'
         ## TODO Check Packet ID 46 to see the signal strength
       return bits
