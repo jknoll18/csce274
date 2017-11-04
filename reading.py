@@ -93,3 +93,8 @@ class Reading:
       return 1
     else:
       return 0
+  ##function for project 3  
+  
+  def pdwall(self):
+      
+
