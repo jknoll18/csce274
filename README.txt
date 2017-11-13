@@ -1,10 +1,13 @@
 Project Assingment 3
 
 Installation:
-
-in progress
+Simply extract the files from the .rar file. Then connect your computer to the create 2 using ethernet.
+Then run the python file and connect to the create2 using the interface. Next, go to the commmands
+section and type in ra2 to execute the random walk program.
 
 Usage:
+All of the commands are located in the commands section of the main menu.
+Simply type in the corresponding character to what is displayed to execute any command listed
 
 Main Commands:
   cl:  clean                  activates the create2 clean program
