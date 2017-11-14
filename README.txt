@@ -1,13 +1,13 @@
 Project Assingment 3
 
 Installation:
-Simply extract the files from the .rar file. Then connect your computer to the create 2 using ethernet.
+Extract the files from provided .rar file, then connect your computer to the create 2 using ethernet cable.
 Then run the python file and connect to the create2 using the interface. Next, go to the commmands
-section and type in ra2 to execute the random walk program.
+section and type in pdc to execute the wall following program. The wall following behavior on the Create robot utilizes a PD controller.
 
 Usage:
 All of the commands are located in the commands section of the main menu.
-Simply type in the corresponding character to what is displayed to execute any command listed
+In order to execute a desired listed command, simply type in the corresponding character to what is displayed to execute.
 
 Main Commands:
   cl:  clean                  activates the create2 clean program
@@ -17,6 +17,13 @@ Main Commands:
   dr:  drive                  drives the create2 using both wheels
   !:   stop                   manually stops the create2
   d:   close                  closes out the connection to the create2
+  rp:  reset and passive      resets the create2 and sets it in passive mode
+  ra:  pentagon program       Runs the pentagon program from project 1
+  ra2: random walk program    Runs the random walk program from project 2
+  pdc: wall following program Runs the wall following behavior from project 3
+  e:   exit                   Exit the command interface
+  p:   passive                sets the create2 to passive mode
+  s:   safe                   sets the create2 to safe mode
 
 Contributors:
 Kaitlyn Ash
