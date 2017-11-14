@@ -94,17 +94,28 @@ class Reading:
     else:
       return 0
   ##function for project 3  
-  
+  ##this wall function was used to see observe wall values 
+  ##were obtained when it come in close proximity of a wall  
   def wall(self):
      a=1
+     ##this is an infinite while loop that constaintly look for the signal 
+     ##strength when one of the bits in sensor 45 was activated
      while(a==1):
+       ##for each bit activated(turns value to 1) the proper sensor
+       ##will be activated
        wall = Interface().read_sensor(45)
        if(wall[5]=="1"):
          Interface().read_sensor(46)
-       if(wall[0]== "1"):
+       if(wall[0]=="1"):
          Interface().read_sensor(51)
        if(wall[1]=="1"):
          Interface().read_sensor(50)
+       if(wall[2]=="1"):
+         Interface().read_sensor(49)
+       if(wall[3]=="1"):
+         Interface().read_sensor(48)
+       if(wall[4]=="1"):
+         Interface().read_sensor(47)
   def pdcontroller(self):
      ##RB signal strength is 40-41
      olderror = 0
