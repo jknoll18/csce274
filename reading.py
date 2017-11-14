@@ -95,6 +95,15 @@ class Reading:
       return 0
   ##function for project 3  
   
-  def pdwall(self):
+  def wall(self):
+     a=1
+     while(a==1):
+       wall = Interface().read_sensor(45)
+       if(wall[5]=="1"):
+         Interface().read_sensor(46)
+       if(wall[0]== "1"):
+         Interface().read_sensor(51)
+       if(wall[1]=="1"):
+         Interface().read_sensor(50)
       
 
