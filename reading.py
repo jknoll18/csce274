@@ -105,5 +105,36 @@ class Reading:
          Interface().read_sensor(51)
        if(wall[1]=="1"):
          Interface().read_sensor(50)
-      
+  def pdcontroller(self):
+     ##RB signal strength is 40-41
+     olderror = 0
+     """
+     values that worked the best
+     kd 1.5,1.3,
+     kp 1.5,1.5,
+     """
+     kp = 1.5
+     kd = 1.5
+     run = 1
+     ##timer3 = Timer(0.0,Interface().drive, args=(50,32767))
+     ##timer3.start() 
+     while(run == 1):
+       Interface().drive(50,32768)
+       collected = Interface().read_sensor(51)
+       error = collected - 30
+       print "error:",error
+       pd = (kp*error) + (kd*(error-olderror))
+       print pd,"\n"
+       olderror = error
+       time.sleep(0.5)
+       if(pd <0):
+         timer0 = Timer(0.0,Interface().drive, args = (100,-1))
+         timer0.start()
+         time.sleep(0.5*(abs(pd)/100))
+         timer0.cancel()
+       if(pd >1):
+         timer0 = Timer(0.0,Interface().drive, args = (100,1))
+         timer0.start()
+         time.sleep(abs(pd)/100)
+         timer0.cancel()     
 
