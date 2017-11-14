@@ -31,6 +31,8 @@ class Interface:
     self.serial_connection.write(raw_command)
         
     # read raw
+    ##this if statement is to assigning the read values for light bumper 
+    ##sensors that output the signal strength
     if sense == 46 or sense== 50 or sense == 51 or sense==47 or sense==48 or sense==49:
       var2 = self.serial_connection.read(2)
     else:    
@@ -57,6 +59,8 @@ class Interface:
       if (bins[3] == '1'):
         print 'RB Active'	    
       return bins
+    ##the elif statement is use to seperate the light bumper sensor and show
+    ##which of the sensors is activated
     elif (sense == 45):
       LBsensor = struct.unpack('>B', var)[0]
       bits = "{0:6b}".format(LBsensor)
@@ -73,6 +77,10 @@ class Interface:
       if (bits[5] == '1'):
         print 'bump Left Active'
       return bits
+    ##the elif statements for sense 46-51 are to obtain the signal 
+    ##strength for their respective lightbumper sensor
+    ## we took the square root of those values because the one that is obtained
+    ##through unpacking is a quadratic value
     elif (sense == 46):
       val = struct.unpack('>H',var2)[0]
       linval = math.sqrt(val)
