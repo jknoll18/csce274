@@ -118,6 +118,7 @@ class Reading:
          Interface().read_sensor(47)
   def pdcontroller(self):
      ##RB signal strength is 40-41
+     ##this is the intial error when the robot is activated for the first time
      olderror = 0
      """
      values that worked the best
