@@ -129,11 +129,15 @@ class Reading:
      kd = 1.5
      run = 1
      ##timer3 = Timer(0.0,Interface().drive, args=(50,32767))
-     ##timer3.start() 
+     ##timer3.start()
+     ##this is also an infinite loop that way it's constaintly 
+     ##updating the values for the pd controller 
      while(run == 1):
        Interface().drive(50,32768)
        collected = Interface().read_sensor(51)
        error = collected - 30
+       ##this was used to observe what values were obtain when subtracted
+       ##with the targeted value
        print "error:",error
        pd = (kp*error) + (kd*(error-olderror))
        print pd,"\n"
