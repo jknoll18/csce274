@@ -1,0 +1,16 @@
+Infrared Character Omni Packet ID: 17
+0 indicates that no character is being received
+Packet ID:52 left
+Packet ID:53 right
+Range:0 –255 
+
+
+Charger Numbers
+160 Reserved
+161 Force Field
+164 Green Buoy
+165 Green Buoy and Force Field
+168 Red Buoy
+169 Red Buoy and Force Field
+172 Red Buoy and Green Buoy
+173 Red Buoy, Green Buoy and Force Field 
