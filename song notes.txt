@@ -1,0 +1,9 @@
+A A# B C
+33 34 35 36
+21 21 21 64
+
+ 
+##Zelda item fanfare
+self.serial_connection.write(chr(140)+chr(1)+chr(4)+chr(33)+chr(21)+chr(34)+chr(21)+chr(35)+chr(21)+chr(36)+chr(64))
+
+self.serial_connection.write(chr(141)+ chr(1))
