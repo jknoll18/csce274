@@ -3,7 +3,7 @@ Project Assignment 4
 Installation:
 Extract the files from provided .rar file, then connect your computer to the create 2 using ethernet cable.
 Then run the python file and connect to the create2 using the interface. Next, go to the commmands
-section and type in *   * to execute the wall following program. 
+section and type in pdc to execute the wall following program. 
 
 Usage:
 All of the commands are located in the commands section of the main menu.
