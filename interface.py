@@ -1,3 +1,4 @@
+##Document read_sensor function, for senses 52-34
 import serial
 import struct
 from threading import Timer
@@ -107,6 +108,23 @@ class Interface:
       linval = math.sqrt(val)
       print linval
       return linval
+    ##senses 52 to 34 are the new ones
+    elif (sense == 52):
+      val = struct.unpack('>B',var)[0]
+      print "char left",val
+      return val
+    elif (sense == 53):
+      val = struct.unpack('>B',var)[0]
+      print "char right",val
+      return val
+    elif (sense == 17):
+      val = struct.unpack('>B',var)[0]
+      print "char omni",val
+      return val
+    elif (sense == 34):
+      charge = struct.unpack('>B', var)[0]
+      bins = "{0:1b}".format(charge)
+      return bins
         ## TODO Check Packet ID 46 to see the signal strength
     ##look up how to convert a string hex into a signed int.
     elif (sense == 19):
