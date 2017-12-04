@@ -41,7 +41,7 @@ class Interface:
     ##since Distance and angle are 2 bits we should create another variable
     # Processing
     if (sense == 18 or sense == 8 or sense == 9 or sense == 10 or sense == 11 or sense == 12 or sense == 13):
-      val = struct.unpack('B',var)[0]
+      val = struct.unpack('>B',var)[0]
       if val == 1:
         print('active')
         return 1
@@ -49,7 +49,7 @@ class Interface:
         print('not active')
         return 0
     elif (sense == 7):
-      bumpdrop = struct.unpack('B',var)[0]
+      bumpdrop = struct.unpack('>B',var)[0]
       bins = "{0:4b}".format(bumpdrop)
       if(bins[0] =='1'):
         print 'LWD Active'
@@ -218,6 +218,8 @@ class Interface:
      ## x += 1
     ##bytes = struct.pack('B' *len(top), *top)
     self.serial_connection.write(chr(140)+chr(0)+chr(9)+chr(55)+chr(64)+chr(48)+chr(64)+chr(51)+chr(16)+chr(53)+chr(16)+chr(55)+chr(64)+chr(48)+chr(64)+chr(51)+chr(16)+chr(53)+chr(16)+chr(50)+chr(64))
+     
+     self.serial_connection.write(chr(140)+chr(1)+chr(4)+chr(45)+chr(30)+chr(46)+chr(30)+chr(47)+chr(30)+chr(48)+chr(64))
   def play(self,songnum):
     self.serial_connection.write(chr(141) + chr(songnum))
   def full(self):
