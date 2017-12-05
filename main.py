@@ -12,17 +12,29 @@ def Main(args=None):
       is_go = False
       while is_go == False:
         print("*enter the number you want for the command*")
-        var = raw_input("*rp for reset and passive, ra for reading button, d to disconnect, r to reset\n s for safe, dr for drive*,pe for Pentagon drive, ! for stop, e for exit\n , f for full mode, drd for drive direct,p for play,s for song:")
+        var = raw_input("*rp for reset and passive, ra2 for reading button, d to disconnect, r to reset\n sa for safe,pdc for pd controller, dr for drive*,pe for Pentagon drive, ! for stop, e for exit\n , f for full mode, drd for drive direct,p for play,so for song:")
         if var == "e":
           is_go = True
           inter.close()
         if var == "ra":
           read.isActive()
         if var == "ra2":
+          inter.full()
           read.isActive2()
+        if var == "wall":
+          read.wall()
+        if var == "pdc":
+          read.pdcontroller()
+        if var == "para":
+          read.pararun()
+        if var == "IC3":
+          read.testIC3()
+        if var == "IC5":
+          read.testIC5()
         if var == "p":
           inter.play(0)
-        if var == "s":
+          ##inter.play(1)
+        if var == "so":
           inter.song()
         else:
           inter.command(var)
