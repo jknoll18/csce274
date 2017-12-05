@@ -3,6 +3,7 @@ import threading
 from threading import Timer
 import random
 import time
+##start
 class Reading: 
   def __init__(self):
     press = False
