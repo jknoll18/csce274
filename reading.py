@@ -1,10 +1,9 @@
-##Jeffrey Knoll, Franco Godoy 
-##Last Edited 10/24/17
 from interface import Interface
 import threading
 from threading import Timer
 import random
 import time
+##start
 class Reading: 
   def __init__(self):
     press = False
@@ -32,7 +31,6 @@ class Reading:
     a = 1
     ##Interface().full()
     ##this outer while will allow the program to do an infinite loop
-    ##this is necessary so that it is constantly checking that the state of 
     ##button, 1 being pressed and 0 is not pressed
     while(a == 1): 
       state = 0
