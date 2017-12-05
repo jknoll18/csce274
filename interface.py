@@ -61,7 +61,6 @@ class Interface:
         print 'RB Active'	    
       return bins
     ##the elif statement is use to seperate the light bumper sensor and show
-    ##which of the sensors is activated
     elif (sense == 45):
       LBsensor = struct.unpack('>B', var)[0]
       bits = "{0:6b}".format(LBsensor)
@@ -125,26 +124,25 @@ class Interface:
       charge = struct.unpack('>B', var)[0]
       bins = "{0:1b}".format(charge)
       return bins
-        ## TODO Check Packet ID 46 to see the signal strength
-    ##look up how to convert a string hex into a signed int.
+      
     elif (sense == 19):
       pack =struct.unpack('4B',struct.pack('>2H', var))
     elif (sense == 20):
       pack =struct.unpack('4B',struct.pack('>2H', var))
     else:
       exit(0)
-
-  def command(self,var): ##function that calls functions depeding on input
+##function that calls functions depeding on input
+  def command(self,var): 
     if var == "rp":
       raw_command = chr(128)
-      self.write_raw(raw_command)    ##should we change the nums to 1,2,3 instead of the specific numbers
+      self.write_raw(raw_command)  
     elif var == "d":
       self.close()
     elif var == "r":
       self.reset()
     elif var == "rp":
       self.passive()
-    elif var == "cl": ## maybe put something in for all button presses
+    elif var == "cl": 
       self.clean()
     elif var == "s":
       self.safe()
@@ -161,7 +159,8 @@ class Interface:
       self.penta()
     elif var == "j":
 	  self.test()
-    elif var == "f":##this will set the robot to full mode
+	##sets the robot to full mode
+    elif var == "f":
       self.full()
     elif var == "drd":
       print("enter right wheel velocity")
@@ -172,19 +171,24 @@ class Interface:
     else:
       is_connected = False
       self.close()
-  def stop(self):  ##the stop function to the robot
+	##the stop function to the robot
+  def stop(self):  
     self.serial_connection.write(chr(173))
   def close(self):
     self.serial_connection.close()
-  def reset(self):  ##the reset function to reset the robot and put it into passive
-    self.serial_connection.write(chr(7))
-  def passive(self):  ##the passive function reconnects the robot to the original passive state
+##the reset function to reset the robot and put it into passive
+  def reset(self):  
+    self.serial_connection.write(chr(7)) 
+##the passive function reconnects the robot to the original passive state
+  def passive(self): 
     self.serial_connection.write(chr(128))
   def clean(self):
-    self.serial_connection.write(chr(165))[0]  ## is this how it works on page 17?
-  def safe(self):  ##the safe function sets the robot to the state safe
+    self.serial_connection.write(chr(165))[0] 
+##the safe function sets the robot to the state safe
+  def safe(self):  
     self.serial_connection.write(chr(131))
-  def drive(self,velocity,radius): ## drive function
+## drive function
+  def drive(self,velocity,radius): 
      ## put in error checking
      v = int(velocity) & 0xffff
      r = int(radius) & 0xffff
@@ -192,8 +196,9 @@ class Interface:
      opcode = (137,)
      data = opcode + pack
      byte = struct.pack('B' * len(data), *data)
-     self.serial_connection.write(byte) # execute drive
-  def driveDirect(self,velocityR,velocityL): ## put in error checking
+# execute drive
+     self.serial_connection.write(byte) 
+  def driveDirect(self,velocityR,velocityL): 
     v1 = int(velocityR) & 0xffff
     v2 = int(velocityL) & 0xffff
     pack =struct.unpack('4B',struct.pack('>2H',v1,v2))
@@ -224,10 +229,11 @@ class Interface:
     self.serial_connection.write(chr(141) + chr(songnum))
   def full(self):
     self.serial_connection.write(chr(132))
-  def stream(self,num_packets,packet_id):## streams i tried to setup
+  def stream(self,num_packets,packet_id):
     code_stream = chr(148) + chr(num_packets) + chr(packet_id)
     self.serial_connection.write(code_stream)
-  def stopStream(self,state):  ##function to stop the stream
+	##function to stop the stream
+  def stopStream(self,state):  
     code_stream2 = chr(150) + chr(state)
 
   ##def time(self,seconds,velocity,radius):
