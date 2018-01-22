@@ -3,6 +3,7 @@ from reading import Reading
 def Main(args=None):
   ##creates a main for the interface
   print("*Welcome to the robot interface*")
+  ##demo
   str = raw_input("*Press c to connect to the robot*")
   if str == "c":
     inter = Interface()
